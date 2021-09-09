@@ -1,0 +1,1 @@
+worker: java -jar target/gokz-achievements-v0.2-alpha-jar-with-dependencies.jar
