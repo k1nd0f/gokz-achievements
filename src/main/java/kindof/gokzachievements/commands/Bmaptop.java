@@ -15,7 +15,7 @@ import static kindof.gokzachievements.commands.EParameter.*;
 import static kindof.gokzachievements.Globals.STEAM_COMMUNITY_PROFILES_URL;
 
 public class Bmaptop extends AbstractCommand {
-    private static final int MAX_FIELDS_ON_EMBED = 25;
+    private static final int MAX_FIELDS_ON_EMBED = 10;
     private static final Color EMBED_COLOR = new Color(255, 0, 135, 255);
 
     public Bmaptop() {

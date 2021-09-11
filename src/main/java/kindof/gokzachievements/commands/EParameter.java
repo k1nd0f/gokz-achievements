@@ -22,8 +22,8 @@ public enum EParameter {
             new DefaultMapEntry<>("pro", "false")
     ),
     limit(
-            "10",
-            new DefaultMapEntry<>("0", "10")
+            "3",
+            new DefaultMapEntry<>("0", "3")
     ),
     tickrate("128"),
     stage("0"),
@@ -32,9 +32,11 @@ public enum EParameter {
             "longjump",
             new DefaultMapEntry<>("lj", "longjump"),
             new DefaultMapEntry<>("bh", "bhop"),
+            new DefaultMapEntry<>("multibh", "multibhop"),
             new DefaultMapEntry<>("mbh", "multibhop"),
             new DefaultMapEntry<>("wj", "weirdjump"),
             new DefaultMapEntry<>("dropbh", "dropbhop"),
+            new DefaultMapEntry<>("dbh", "dropbhop"),
             new DefaultMapEntry<>("cj", "countjump"),
             new DefaultMapEntry<>("laj", "ladderjump")
     ),
