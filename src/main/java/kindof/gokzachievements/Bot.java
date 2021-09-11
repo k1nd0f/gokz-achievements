@@ -17,7 +17,6 @@ import javax.security.auth.login.LoginException;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static kindof.gokzachievements.Globals.*;
 import static kindof.gokzachievements.commands.AbstractCommand.*;
@@ -169,14 +168,18 @@ public class Bot extends ListenerAdapter {
                             WARNING_COLOR,
                             null,
                             "**You're using the wrong channel, try this one " + guild.getTextChannelsByName(CHANNEL_NAME, false).get(0).getAsMention() + "**"
-                    )).queue(successMessage -> {
-                        message.delete().queueAfter(7, TimeUnit.SECONDS);
-                        successMessage.delete().queueAfter(7, TimeUnit.SECONDS);
-                    });
+                    )).queue(successMessage -> deleteMessagesAfter(successMessage, message));
                 } catch (Exception ignored) {
-                    messageChannel.sendMessage(WRONG_COMMAND_MESSAGE_EMBED).queue();
+                    messageChannel.sendMessage(WRONG_COMMAND_MESSAGE_EMBED)
+                            .queue(successMessage -> deleteMessagesAfter(successMessage, message));
                 }
             }
+        }
+    }
+
+    private void deleteMessagesAfter(Message... messages) {
+        for (Message message : messages) {
+            message.delete().queueAfter(MESSAGE_DELETE_DELAY, MESSAGE_DELETE_TIME_UNIT);
         }
     }
 }
