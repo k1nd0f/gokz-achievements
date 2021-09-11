@@ -123,7 +123,7 @@ public class Bot extends ListenerAdapter {
                     AbstractCommand.OutputType commandOutputType = command.getOutputType();
 
                     User author = event.getAuthor();
-                    List<MessageEmbed> messageEmbeds = command.getResult(author);
+                    List<MessageEmbed> messageEmbeds = command.execute(author);
                     if (messageEmbeds != null) {
                         for (MessageEmbed messageEmbed : messageEmbeds) {
                             if (commandOutputType == AbstractCommand.OutputType.PUBLIC_CHANNEL) {

@@ -44,7 +44,7 @@ public class Bans extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> getResult(User author) {
+    public List<MessageEmbed> execute(User author) {
         Bot bot = Bot.getInstance();
         List<BanEntity> banEntities = KzApiUtil.httpGetRequestToAPIAndParseToEntities("bans", params, BanEntity.class);
         if (banEntities.size() == 0) return null;

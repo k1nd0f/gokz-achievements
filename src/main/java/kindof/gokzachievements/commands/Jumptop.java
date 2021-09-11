@@ -50,7 +50,7 @@ public class Jumptop extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> getResult(User author) {
+    public List<MessageEmbed> execute(User author) {
         Bot bot = Bot.getInstance();
         String jt = params.get(jumptype);
         params.remove(jumptype);

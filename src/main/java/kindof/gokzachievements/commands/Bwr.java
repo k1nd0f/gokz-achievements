@@ -49,7 +49,7 @@ public class Bwr extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> getResult(User author) {
+    public List<MessageEmbed> execute(User author) {
         Bot bot = Bot.getInstance();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();
         List<MapTimeEntity> mapTimeEntities = KzApiUtil.httpGetRequestToAPIAndParseToEntities("records/top", params, MapTimeEntity.class);

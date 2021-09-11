@@ -26,7 +26,7 @@ public class Ping extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> getResult(User author) {
+    public List<MessageEmbed> execute(User author) {
         Bot bot = Bot.getInstance();
         JDA discordAPI = bot.getDiscordAPI();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();

@@ -30,7 +30,7 @@ public class Register extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> getResult(User author) {
+    public List<MessageEmbed> execute(User author) {
         Bot bot = Bot.getInstance();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();
 

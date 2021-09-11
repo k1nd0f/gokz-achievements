@@ -37,7 +37,7 @@ public abstract class AbstractCommand {
 
     public abstract String getCommandDescription();
 
-    public abstract List<MessageEmbed> getResult(User author);
+    public abstract List<MessageEmbed> execute(User author);
 
     public enum OutputType {
         PUBLIC_CHANNEL,

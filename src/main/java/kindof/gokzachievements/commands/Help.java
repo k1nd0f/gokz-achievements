@@ -24,7 +24,7 @@ public class Help extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> getResult(User author) {
+    public List<MessageEmbed> execute(User author) {
         Bot bot = Bot.getInstance();
         ECommand[] eCommands = ECommand.values();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();
