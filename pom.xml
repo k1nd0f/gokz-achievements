@@ -6,7 +6,7 @@
 
     <groupId>kindof</groupId>
     <artifactId>gokz-achievements</artifactId>
-    <version>v0.2-alpha</version>
+    <version>v0.2.1-alpha</version>
 
     <build>
         <plugins>
