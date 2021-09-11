@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import static kindof.gokzachievements.Globals.*;
+import static kindof.gokzachievements.Globals.GITHUB_URL;
 
 public class Help extends AbstractCommand {
     private static final Color EMBED_COLOR = new Color(255, 0, 70, 255);
@@ -20,7 +20,7 @@ public class Help extends AbstractCommand {
 
     @Override
     public String getCommandDescription() {
-        return ">>> **" + BOT_PREFIX + BOT_SEPARATOR + getCommandName() + "**\nShows a list of all commands";
+        return ">>> **" + PREFIX + SEPARATOR + getCommandName() + "**\nShows a list of all commands";
     }
 
     @Override

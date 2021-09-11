@@ -12,8 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static kindof.gokzachievements.commands.EParameter.*;
-import static kindof.gokzachievements.Globals.BOT_PREFIX;
-import static kindof.gokzachievements.Globals.BOT_SEPARATOR;
 import static kindof.gokzachievements.Globals.BANS_URL;
 
 public class Bans extends AbstractCommand {
@@ -40,7 +38,7 @@ public class Bans extends AbstractCommand {
 
     @Override
     public String getCommandDescription() {
-        return ">>> **" + BOT_PREFIX + BOT_SEPARATOR + getCommandName() + " `[limit]`**\nShows last bans from **Global API**";
+        return ">>> **" + PREFIX + SEPARATOR + getCommandName() + " `[limit]`**\nShows last bans from **Global API**";
     }
 
     @Override

@@ -8,8 +8,6 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import static kindof.gokzachievements.Globals.BOT_PREFIX;
-import static kindof.gokzachievements.Globals.BOT_SEPARATOR;
 import static kindof.gokzachievements.Globals.WEB_URL;
 
 public class Register extends AbstractCommand {
@@ -26,7 +24,7 @@ public class Register extends AbstractCommand {
 
     @Override
     public String getCommandDescription() {
-        return ">>> **" + BOT_PREFIX + BOT_SEPARATOR + getCommandName() + "**\nSends a private message to link your Steam account to Discord";
+        return ">>> **" + PREFIX + SEPARATOR + getCommandName() + "**\nSends a private message to link your Steam account to Discord";
     }
 
     @Override

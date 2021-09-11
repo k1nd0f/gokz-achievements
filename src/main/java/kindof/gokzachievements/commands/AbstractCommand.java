@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractCommand {
+    public static final String PREFIX = "gokz";
+    public static final String SEPARATOR = "/";
 
     protected OutputType outputType;
     protected EParameter[] argQueue;

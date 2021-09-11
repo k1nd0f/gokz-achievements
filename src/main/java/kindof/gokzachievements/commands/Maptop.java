@@ -12,8 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static kindof.gokzachievements.commands.EParameter.*;
-import static kindof.gokzachievements.Globals.BOT_PREFIX;
-import static kindof.gokzachievements.Globals.BOT_SEPARATOR;
 import static kindof.gokzachievements.Globals.STEAM_COMMUNITY_PROFILES_URL;
 
 public class Maptop extends AbstractCommand {
@@ -36,7 +34,7 @@ public class Maptop extends AbstractCommand {
 
     @Override
     public String getCommandDescription() {
-        return ">>> **" + BOT_PREFIX + BOT_SEPARATOR + getCommandName() + " `<game-mode>` `<map-name>` `[run-type]` `[limit]`**\nShows the global leaderboard of the selected map";
+        return ">>> **" + PREFIX + SEPARATOR + getCommandName() + " `<game-mode>` `<map-name>` `[run-type]` `[limit]`**\nShows the global leaderboard of the selected map";
     }
 
     @Override

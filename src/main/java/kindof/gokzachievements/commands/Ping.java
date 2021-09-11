@@ -9,9 +9,6 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import static kindof.gokzachievements.Globals.BOT_PREFIX;
-import static kindof.gokzachievements.Globals.BOT_SEPARATOR;
-
 public class Ping extends AbstractCommand {
     private static final Color EMBED_COLOR = Color.GREEN;
 
@@ -22,7 +19,7 @@ public class Ping extends AbstractCommand {
 
     @Override
     public String getCommandDescription() {
-        return ">>> **" + BOT_PREFIX + BOT_SEPARATOR + getCommandName() + "**\nShows the response latency";
+        return ">>> **" + PREFIX + SEPARATOR + getCommandName() + "**\nShows the response latency";
     }
 
     @Override

@@ -11,8 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static kindof.gokzachievements.commands.EParameter.*;
-import static kindof.gokzachievements.Globals.BOT_PREFIX;
-import static kindof.gokzachievements.Globals.BOT_SEPARATOR;
 import static kindof.gokzachievements.Globals.STEAM_COMMUNITY_PROFILES_URL;
 import static kindof.gokzachievements.Globals.MAP_THUMBNAIL_URL;
 import static kindof.gokzachievements.Globals.MAP_THUMBNAIL_FORMAT;
@@ -44,7 +42,7 @@ public class Wr extends AbstractCommand {
 
     @Override
     public String getCommandDescription() {
-        return ">>> **" + BOT_PREFIX + BOT_SEPARATOR + getCommandName() + " `<game-mode>` `<map-name>` `[run-type]`**\nShows the world record of the selected map";
+        return ">>> **" + PREFIX + SEPARATOR + getCommandName() + " `<game-mode>` `<map-name>` `[run-type]`**\nShows the world record of the selected map";
     }
 
     @Override

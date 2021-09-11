@@ -2,6 +2,8 @@ package kindof.gokzachievements;
 
 import kindof.gokzachievements.commands.AbstractCommand;
 import kindof.gokzachievements.commands.ECommand;
+import kindof.gokzachievements.exceptions.NoResultFoundException;
+import kindof.gokzachievements.exceptions.WrongChannelException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -15,12 +17,16 @@ import javax.security.auth.login.LoginException;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import static kindof.gokzachievements.Globals.BOT_PREFIX;
-import static kindof.gokzachievements.Globals.BOT_SEPARATOR;
+import static kindof.gokzachievements.Globals.*;
+import static kindof.gokzachievements.commands.AbstractCommand.*;
+import static kindof.gokzachievements.commands.AbstractCommand.OutputType.*;
 
 public class Bot extends ListenerAdapter {
     private static volatile Bot instance;
+
+    private static final Color WARNING_COLOR = Color.RED;
 
     private static final MessageEmbed NO_RESULT_FOUND_MESSAGE_EMBED = getInstance().createMessageEmbed(
             Color.LIGHT_GRAY,
@@ -30,7 +36,12 @@ public class Bot extends ListenerAdapter {
     private static final MessageEmbed SENDING_FAILED_MESSAGE_EMBED = getInstance().createMessageEmbed(
             Color.LIGHT_GRAY,
             "Sending failed",
-            "Check the discord settings option:\n> **`Privacy & Safety -> Allow direct messages from server members`**"
+            "Check the discord settings option\n> **`Privacy & Safety -> Allow direct messages from server members`**"
+    );
+    private static final MessageEmbed WRONG_COMMAND_MESSAGE_EMBED = getInstance().createMessageEmbed(
+            WARNING_COLOR,
+            null,
+            "**You are trying to run the wrong command, you may have made a typo, try again.**"
     );
 
     private JDA discordAPI;
@@ -38,7 +49,7 @@ public class Bot extends ListenerAdapter {
 
     private Bot() {
         try {
-            discordAPI = JDABuilder.createDefault(Globals.BOT_TOKEN)
+            discordAPI = JDABuilder.createDefault(BOT_TOKEN)
                     .addEventListeners(this)
                     .build()
                     .awaitReady();
@@ -74,7 +85,7 @@ public class Bot extends ListenerAdapter {
                 .setDescription(description)
                 .setImage(imageUrl)
                 .setThumbnail(thumbnailUrl)
-                .setFooter(Globals.COPYRIGHT_MARK, botAvatarUrl);
+                .setFooter(COPYRIGHT_MARK, botAvatarUrl);
 
         if (fields != null) {
             for (MessageEmbed.Field field : fields) {
@@ -99,52 +110,71 @@ public class Bot extends ListenerAdapter {
     @Override
     public void onGuildJoin(@Nonnull GuildJoinEvent event) {
         Guild guild = event.getGuild();
-        List<TextChannel> textChannels = guild.getTextChannelsByName(Globals.CHANNEL_NAME, false);
+        List<TextChannel> textChannels = guild.getTextChannelsByName(CHANNEL_NAME, false);
         if (textChannels.size() == 0) {
-            guild.createTextChannel(Globals.CHANNEL_NAME).queue();
+            guild.createTextChannel(CHANNEL_NAME)
+                    .setSlowmode(CHANNEL_SLOWMODE)
+                    .setTopic(CHANNEL_TOPIC)
+                    .queue();
         }
     }
 
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
         if (event.isFromType(ChannelType.TEXT) && !event.getAuthor().isBot()) {
+            Guild guild = event.getGuild();
             MessageChannel messageChannel = event.getChannel();
-            if (messageChannel.getName().equals(Globals.CHANNEL_NAME)) {
-                String content = event.getMessage().getContentRaw();
-                String[] commandPrefix = content.split(BOT_PREFIX + BOT_SEPARATOR);
+            Message message = event.getMessage();
+
+            String content = message.getContentRaw();
+            String[] commandPrefix = content.split(PREFIX + SEPARATOR);
+
+            if (commandPrefix.length != 1) {
                 try {
+                    if (!messageChannel.getName().equals(CHANNEL_NAME)) throw new WrongChannelException();
+
                     String[] commandPostfix = commandPrefix[commandPrefix.length - 1].split(" ");
                     String[] args = Arrays.copyOfRange(commandPostfix, 1, commandPostfix.length);
                     String commandName = commandPostfix[0];
-
                     ECommand eCommand = ECommand.valueOf(commandName);
-                    AbstractCommand command = eCommand.getCommand();
-                    command.setArgs(args);
-                    AbstractCommand.OutputType commandOutputType = command.getOutputType();
 
-                    User author = event.getAuthor();
-                    List<MessageEmbed> messageEmbeds = command.execute(author);
-                    if (messageEmbeds != null) {
+                    try {
+                        AbstractCommand command = eCommand.getCommand();
+                        command.setArgs(args);
+                        AbstractCommand.OutputType commandOutputType = command.getOutputType();
+
+                        User author = event.getAuthor();
+                        List<MessageEmbed> messageEmbeds = command.execute(author);
+                        if (messageEmbeds == null) throw new NoResultFoundException();
+
                         for (MessageEmbed messageEmbed : messageEmbeds) {
-                            if (commandOutputType == AbstractCommand.OutputType.PUBLIC_CHANNEL) {
+                            if (commandOutputType == PUBLIC_CHANNEL) {
                                 messageChannel.sendMessage(messageEmbed).queue();
-                            } else /* if (commandOutputType == Command.OutputType.PRIVATE_CHANNEL) */ {
+                            } else /* if (commandOutputType == PRIVATE_CHANNEL) */ {
                                 author.openPrivateChannel()
-                                        .complete()
-                                        .sendMessage(messageEmbed)
-                                        .queue(
-                                                success -> {},
-                                                throwable -> messageChannel.sendMessage(SENDING_FAILED_MESSAGE_EMBED).queue()
+                                        .queue(privateChannel -> privateChannel
+                                                .sendMessage(messageEmbed)
+                                                .queue(
+                                                        sendSuccess -> message.delete().queue(),
+                                                        sendFail -> messageChannel.sendMessage(SENDING_FAILED_MESSAGE_EMBED).queue()
+                                                )
                                         );
                             }
                         }
-                    } else {
+                    } catch (NoResultFoundException ignored) {
                         messageChannel.sendMessage(NO_RESULT_FOUND_MESSAGE_EMBED).queue();
                     }
+                } catch (WrongChannelException ignored) {
+                    messageChannel.sendMessage(createMessageEmbed(
+                            WARNING_COLOR,
+                            null,
+                            "**You're using the wrong channel, try this one " + guild.getTextChannelsByName(CHANNEL_NAME, false).get(0).getAsMention() + "**"
+                    )).queue(successMessage -> {
+                        message.delete().queueAfter(7, TimeUnit.SECONDS);
+                        successMessage.delete().queueAfter(7, TimeUnit.SECONDS);
+                    });
                 } catch (Exception ignored) {
-                    if (commandPrefix.length != 1) {
-                        messageChannel.sendMessage(NO_RESULT_FOUND_MESSAGE_EMBED).queue();
-                    }
+                    messageChannel.sendMessage(WRONG_COMMAND_MESSAGE_EMBED).queue();
                 }
             }
         }

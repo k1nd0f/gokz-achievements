@@ -12,8 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static kindof.gokzachievements.commands.EParameter.*;
-import static kindof.gokzachievements.Globals.BOT_PREFIX;
-import static kindof.gokzachievements.Globals.BOT_SEPARATOR;
 import static kindof.gokzachievements.Globals.STEAM_COMMUNITY_PROFILES_URL;
 
 public class Jumptop extends AbstractCommand {
@@ -46,7 +44,7 @@ public class Jumptop extends AbstractCommand {
 
     @Override
     public String getCommandDescription() {
-        return ">>> **" + BOT_PREFIX + BOT_SEPARATOR + getCommandName() + " `<jump-type>` `[bind/no-bind]` `[limit]`**\nShows the global leaderboard of the selected jump type";
+        return ">>> **" + PREFIX + SEPARATOR + getCommandName() + " `<jump-type>` `[bind/no-bind]` `[limit]`**\nShows the global leaderboard of the selected jump type";
     }
 
     @Override
