@@ -2,8 +2,11 @@
 
 # ![][logo] GOKZ Achievements
 ###### Discord Bot
-## Commands
 
+<br>This bot is currently running on the discord server **[cis kittens](https://discord.gg/7weAZBztxf)**<br>
+Join the discord server if you want to test the bot
+
+## Commands
 ### gokz/help
 Shows a list of all commands
 ___
