@@ -1,6 +1,8 @@
 package kindof.gokzachievements.commands;
 
 import kindof.gokzachievements.Bot;
+import kindof.gokzachievements.exceptions.PermissionAccessException;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
@@ -14,7 +16,7 @@ public class Register extends AbstractCommand {
     private static final Color EMBED_COLOR = Color.CYAN;
 
     public Register() {
-        visibility = false;
+        permissions = new Permission[] { Permission.ADMINISTRATOR };
         outputType = OutputType.PRIVATE_CHANNEL;
     }
 
@@ -29,7 +31,9 @@ public class Register extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> execute(Member author) {
+    public List<MessageEmbed> execute(Member author) throws PermissionAccessException {
+        if (!isAccessible(author)) throw new PermissionAccessException();
+
         Bot bot = Bot.getInstance();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();
 

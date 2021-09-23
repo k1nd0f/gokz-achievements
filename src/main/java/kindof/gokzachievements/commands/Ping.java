@@ -1,7 +1,9 @@
 package kindof.gokzachievements.commands;
 
 import kindof.gokzachievements.Bot;
+import kindof.gokzachievements.exceptions.PermissionAccessException;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
@@ -13,7 +15,7 @@ public class Ping extends AbstractCommand {
     private static final Color EMBED_COLOR = Color.GREEN;
 
     public Ping() {
-        visibility = false;
+        permissions = new Permission[] { Permission.ADMINISTRATOR };
     }
 
     @Override
@@ -27,7 +29,9 @@ public class Ping extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> execute(Member author) {
+    public List<MessageEmbed> execute(Member author) throws PermissionAccessException {
+        if (!isAccessible(author)) throw new PermissionAccessException();
+
         Bot bot = Bot.getInstance();
         JDA discordAPI = bot.getDiscordAPI();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();

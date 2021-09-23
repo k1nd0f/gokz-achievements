@@ -1,5 +1,7 @@
 package kindof.gokzachievements.commands;
 
+import kindof.gokzachievements.exceptions.PermissionAccessException;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
@@ -14,12 +16,20 @@ public abstract class AbstractCommand {
     protected OutputType outputType;
     protected EParameter[] argQueue;
     protected Map<EParameter, String> params;
-    protected boolean visibility;
+    protected Permission[] permissions;
 
     public AbstractCommand() {
-        visibility = true;
         params = new HashMap<>();
         outputType = OutputType.PUBLIC_CHANNEL;
+    }
+
+    protected boolean isAccessible(Member member) {
+        if (permissions != null) {
+            for (Permission permission : permissions) {
+                if (!member.getPermissions().contains(permission)) return false;
+            }
+        }
+        return true;
     }
 
     public void setArgs(String... args) {
@@ -37,15 +47,11 @@ public abstract class AbstractCommand {
         return outputType;
     }
 
-    public boolean getVisibility() {
-        return visibility;
-    }
+    public abstract List<MessageEmbed> execute(Member author) throws PermissionAccessException;
 
     public abstract String getCommandName();
 
     public abstract String getCommandDescription();
-
-    public abstract List<MessageEmbed> execute(Member author);
 
     public enum OutputType {
         PUBLIC_CHANNEL,

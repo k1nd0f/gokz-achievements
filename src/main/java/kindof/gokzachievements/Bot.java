@@ -3,6 +3,7 @@ package kindof.gokzachievements;
 import kindof.gokzachievements.commands.AbstractCommand;
 import kindof.gokzachievements.commands.ECommand;
 import kindof.gokzachievements.exceptions.NoResultFoundException;
+import kindof.gokzachievements.exceptions.PermissionAccessException;
 import kindof.gokzachievements.exceptions.WrongChannelException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -41,6 +42,11 @@ public class Bot extends ListenerAdapter {
             WARNING_COLOR,
             null,
             "**You are trying to run the wrong command, you may have made a typo, try again.**"
+    );
+    private static final MessageEmbed NOT_ENOUGH_PERMISSIONS_MESSAGE_EMBED = getInstance().createMessageEmbed(
+            WARNING_COLOR,
+            null,
+            "**You don't have enough permissions to use this command**"
     );
 
     private JDA discordAPI;
@@ -162,6 +168,8 @@ public class Bot extends ListenerAdapter {
                                         );
                             }
                         }
+                    } catch (PermissionAccessException ignored) {
+                        messageChannel.sendMessage(NOT_ENOUGH_PERMISSIONS_MESSAGE_EMBED).queue();
                     } catch (NoResultFoundException ignored) {
                         messageChannel.sendMessage(NO_RESULT_FOUND_MESSAGE_EMBED).queue();
                     }

@@ -13,10 +13,6 @@ import static kindof.gokzachievements.Globals.GITHUB_URL;
 public class Help extends AbstractCommand {
     private static final Color EMBED_COLOR = new Color(255, 0, 70, 255);
 
-    public Help() {
-        visibility = false;
-    }
-
     @Override
     public String getCommandName() {
         return ECommand.help.name();
@@ -36,7 +32,8 @@ public class Help extends AbstractCommand {
 
         for (ECommand eCommand : eCommands) {
             AbstractCommand command = eCommand.getCommand();
-            if (!command.getVisibility()) continue;
+            if (!command.isAccessible(author)) continue;
+
             String commandName = command.getCommandName();
             String commandDescription = command.getCommandDescription();
             String firstChar = commandName.charAt(0) + "";
