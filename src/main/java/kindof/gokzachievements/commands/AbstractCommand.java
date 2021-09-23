@@ -1,7 +1,7 @@
 package kindof.gokzachievements.commands;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +45,7 @@ public abstract class AbstractCommand {
 
     public abstract String getCommandDescription();
 
-    public abstract List<MessageEmbed> execute(User author);
+    public abstract List<MessageEmbed> execute(Member author);
 
     public enum OutputType {
         PUBLIC_CHANNEL,

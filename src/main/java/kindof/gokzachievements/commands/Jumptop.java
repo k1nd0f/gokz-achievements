@@ -4,8 +4,8 @@ import kindof.gokzachievements.Bot;
 import kindof.gokzachievements.utils.Util;
 import kindof.gokzachievements.kzapi.KzApiUtil;
 import kindof.gokzachievements.kzapi.entities.JumpEntity;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -48,7 +48,7 @@ public class Jumptop extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> execute(User author) {
+    public List<MessageEmbed> execute(Member author) {
         Bot bot = Bot.getInstance();
         String jt = params.get(jumptype);
         params.remove(jumptype);

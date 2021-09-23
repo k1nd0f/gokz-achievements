@@ -1,8 +1,8 @@
 package kindof.gokzachievements.commands;
 
 import kindof.gokzachievements.Bot;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -29,7 +29,7 @@ public class Register extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> execute(User author) {
+    public List<MessageEmbed> execute(Member author) {
         Bot bot = Bot.getInstance();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();
 

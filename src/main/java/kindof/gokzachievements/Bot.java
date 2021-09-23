@@ -142,7 +142,9 @@ public class Bot extends ListenerAdapter {
                         command.setArgs(args);
                         AbstractCommand.OutputType commandOutputType = command.getOutputType();
 
-                        User author = event.getAuthor();
+                        Member author = event.getMember();
+                        assert author != null;
+
                         List<MessageEmbed> messageEmbeds = command.execute(author);
                         if (messageEmbeds == null) throw new NoResultFoundException();
 
@@ -150,7 +152,7 @@ public class Bot extends ListenerAdapter {
                             if (commandOutputType == PUBLIC_CHANNEL) {
                                 messageChannel.sendMessage(messageEmbed).queue();
                             } else /* if (commandOutputType == PRIVATE_CHANNEL) */ {
-                                author.openPrivateChannel()
+                                author.getUser().openPrivateChannel()
                                         .queue(privateChannel -> privateChannel
                                                 .sendMessage(messageEmbed)
                                                 .queue(

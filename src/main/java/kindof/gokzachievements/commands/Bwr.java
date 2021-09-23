@@ -3,8 +3,8 @@ package kindof.gokzachievements.commands;
 import kindof.gokzachievements.Bot;
 import kindof.gokzachievements.kzapi.KzApiUtil;
 import kindof.gokzachievements.kzapi.entities.MapTimeEntity;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -47,7 +47,7 @@ public class Bwr extends AbstractCommand {
     }
 
     @Override
-    public List<MessageEmbed> execute(User author) {
+    public List<MessageEmbed> execute(Member author) {
         Bot bot = Bot.getInstance();
         List<MessageEmbed> messageEmbeds = new LinkedList<>();
         List<MapTimeEntity> mapTimeEntities = KzApiUtil.httpGetRequestToAPIAndParseToEntities("records/top", params, MapTimeEntity.class);
