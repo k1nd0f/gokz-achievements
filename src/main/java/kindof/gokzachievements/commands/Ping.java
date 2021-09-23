@@ -12,6 +12,10 @@ import java.util.List;
 public class Ping extends AbstractCommand {
     private static final Color EMBED_COLOR = Color.GREEN;
 
+    public Ping() {
+        visibility = false;
+    }
+
     @Override
     public String getCommandName() {
         return ECommand.ping.name();

@@ -14,6 +14,7 @@ public class Register extends AbstractCommand {
     private static final Color EMBED_COLOR = Color.CYAN;
 
     public Register() {
+        visibility = false;
         outputType = OutputType.PRIVATE_CHANNEL;
     }
 

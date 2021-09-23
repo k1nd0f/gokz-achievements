@@ -14,8 +14,10 @@ public abstract class AbstractCommand {
     protected OutputType outputType;
     protected EParameter[] argQueue;
     protected Map<EParameter, String> params;
+    protected boolean visibility;
 
     public AbstractCommand() {
+        visibility = true;
         params = new HashMap<>();
         outputType = OutputType.PUBLIC_CHANNEL;
     }
@@ -33,6 +35,10 @@ public abstract class AbstractCommand {
 
     public OutputType getOutputType() {
         return outputType;
+    }
+
+    public boolean getVisibility() {
+        return visibility;
     }
 
     public abstract String getCommandName();
