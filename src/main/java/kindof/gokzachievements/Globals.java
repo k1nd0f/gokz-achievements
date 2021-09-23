@@ -2,7 +2,6 @@ package kindof.gokzachievements;
 
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class Globals {
 
@@ -25,9 +24,6 @@ public class Globals {
     public static final String CHANNEL_NAME                  = "gokz-achievements";
     public static final String CHANNEL_TOPIC                 = "gokz/help - for the command list";
     public static final int CHANNEL_SLOWMODE                 = 5;
-
-    public static final int MESSAGE_DELETE_DELAY             = 10;
-    public static final TimeUnit MESSAGE_DELETE_TIME_UNIT    = TimeUnit.SECONDS;
 
     public static final String STEAM_COMMUNITY_PROFILES_URL  = "https://steamcommunity.com/profiles";
 

@@ -38,6 +38,11 @@ public class Bot extends ListenerAdapter {
             "Sending failed",
             "Check the discord settings option\n> **`Privacy & Safety -> Allow direct messages from server members`**"
     );
+    private static final MessageEmbed SENDING_SUCCESSED_MESSAGE_EMBED = getInstance().createMessageEmbed(
+            Color.GREEN,
+            null,
+            "**A private message was sent to you, check direct messages**"
+    );
     private static final MessageEmbed WRONG_COMMAND_MESSAGE_EMBED = getInstance().createMessageEmbed(
             WARNING_COLOR,
             null,
@@ -162,7 +167,7 @@ public class Bot extends ListenerAdapter {
                                         .queue(privateChannel -> privateChannel
                                                 .sendMessage(messageEmbed)
                                                 .queue(
-                                                        sendSuccess -> message.delete().queue(),
+                                                        sendSuccess -> messageChannel.sendMessage(SENDING_SUCCESSED_MESSAGE_EMBED).queue(),
                                                         sendFail -> messageChannel.sendMessage(SENDING_FAILED_MESSAGE_EMBED).queue()
                                                 )
                                         );
@@ -178,18 +183,11 @@ public class Bot extends ListenerAdapter {
                             WARNING_COLOR,
                             null,
                             "**You're using the wrong channel, try this one " + guild.getTextChannelsByName(CHANNEL_NAME, false).get(0).getAsMention() + "**"
-                    )).queue(successMessage -> deleteMessagesAfter(successMessage, message));
+                    )).queue();
                 } catch (Exception ignored) {
-                    messageChannel.sendMessage(WRONG_COMMAND_MESSAGE_EMBED)
-                            .queue(successMessage -> deleteMessagesAfter(successMessage, message));
+                    messageChannel.sendMessage(WRONG_COMMAND_MESSAGE_EMBED).queue();
                 }
             }
-        }
-    }
-
-    private void deleteMessagesAfter(Message... messages) {
-        for (Message message : messages) {
-            message.delete().queueAfter(MESSAGE_DELETE_DELAY, MESSAGE_DELETE_TIME_UNIT);
         }
     }
 }
