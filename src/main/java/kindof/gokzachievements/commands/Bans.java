@@ -93,13 +93,11 @@ public class Bans extends AbstractCommand {
     private String splitAndCombineStats(String stats) {
         if (stats.isEmpty()) return "";
 
-        String[] splittedStats = Util.asteriskValid(stats.replaceAll(", ", "\n")).split("\n");
+        String[] splittedStats = Util.asteriskValid(stats).split(", ");
         StringBuilder result = new StringBuilder();
         for (String stat : splittedStats) {
             String[] splittedStat = stat.split(": ");
-            String statName = splittedStat[0];
-            String statData = splittedStat[1];
-            stat = statName + ": **" + statData + "**";
+            stat = splittedStat[0] + ": **" + splittedStat[1] + "**";
             result.append(stat).append("\n");
         }
 
