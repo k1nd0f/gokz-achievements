@@ -26,7 +26,8 @@ import static kindof.gokzachievements.commands.AbstractCommand.OutputType.*;
 public class Bot extends ListenerAdapter {
     private static volatile Bot instance;
 
-    private static final Color WARNING_COLOR = Color.RED;
+    private static final Color WARNING_COLOR = new Color(255, 23, 54);
+    private static final Color SUCCESS_COLOR = new Color(15, 255, 88);
 
     private static final MessageEmbed NO_RESULT_FOUND_MESSAGE_EMBED = getInstance().createMessageEmbed(
             Color.LIGHT_GRAY,
@@ -39,7 +40,7 @@ public class Bot extends ListenerAdapter {
             "Check the discord settings option\n> **`Privacy & Safety -> Allow direct messages from server members`**"
     );
     private static final MessageEmbed SENDING_SUCCESSED_MESSAGE_EMBED = getInstance().createMessageEmbed(
-            Color.GREEN,
+            SUCCESS_COLOR,
             null,
             "**A private message was sent to you, check direct messages**"
     );
